@@ -1,4 +1,7 @@
-package tio.patinhas.models;
+package tio.patinhas.models.enums;
 
-public class TipoTransacao {
+public enum TipoTransacao {
+    COMPRA,
+    VENDA,
+    TROCA
 }
