@@ -22,11 +22,14 @@ public class Transacao {
         this.valorTotal = calcularValorTotal();
     }
 
+    public void registrar() {
+        this.dataHora = new Date();
+        calcularValorTotal();
+      
+        System.out.println("Transação registrada com sucesso.");
+    }
+  
     public BigDecimal calcularValorTotal() {
         return quantidade.multiply(precoUnitario);
-    }
-
-    public void registrar() {
-        System.out.println("Transação registrada com sucesso.");
     }
 }
