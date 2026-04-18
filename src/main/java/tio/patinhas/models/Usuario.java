@@ -1,35 +1,42 @@
 package tio.patinhas.models;
 
-import java.util.Date;
-import java.util.UUID;
+import tio.patinhas.service.AuthenticateService;
 
 public class Usuario {
     private Long id;
-    private String hashPassword;
 
-    public String name;
-    public String email;
-    public Date createDate;
-    public Date updateDate;
+    private String nome;
+    private String email;
+    private String senhaHash;
+    private Carteira carteira;
+    private AuthenticateService autenticacaoService;
 
-    public Usuario(Long id, String hashPassword, String name, String email, Date dataCadastro, Date dataAtualizada) {
-        this.id = id;
-        this.hashPassword = hashPassword;
-        this.name = name;
+    public Usuario(String nome, String email, String senhaHash) {
+        this.nome = nome;
         this.email = email;
-        this.createDate = dataCadastro;
-        this.updateDate = dataAtualizada;
-    }
-
-    // criar realms para o usuário para criação do token
-    public String generateToken() {
-        return UUID.randomUUID().toString();
+        this.senhaHash = senhaHash;
+        this.carteira = new Carteira();
+        this.autenticacaoService = new AuthenticateService();
     }
 
     public Usuario() {
     }
 
-    public String getName() {
-        return name;
+    public void cadastrar() {
+        // lógica de cadastro (persistência, validação, etc.)
+        System.out.println("Usuário cadastrado com sucesso.");
+    }
+
+    public boolean autenticar(String email, String senha) {
+        return autenticacaoService.login(email, senha);
+    }
+
+    public void recuperarSenha() {
+        // lógica de recuperação de senha
+        System.out.println("Instruções de recuperação enviadas.");
+    }
+
+    public Carteira getCarteira() {
+        return carteira;
     }
 }

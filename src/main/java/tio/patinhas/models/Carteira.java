@@ -1,19 +1,17 @@
 package tio.patinhas.models;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Carteira {
     private Long id;
-    private BigDecimal saldoVirtual;
-    private BigDecimal valorTotalInvestido;
-    private BigDecimal valorAtual;
-    private BigDecimal lucroPrejuizo;
 
-    private List<Transacao> transacoes;
+    private Double saldoVirtual = 0.0;
+    private Double valorTotalInvestido = 0.0;
+    private Double valorAtual = 0.0;
+    private Double lucroPrejuizo = 0.0;
 
-    public Carteira(Long id, BigDecimal saldoVirtual, BigDecimal valorTotalInvestido, BigDecimal valorAtual, BigDecimal lucroPrejuizo, List<Transacao> transacoes) {
+    public Carteira(Long id, Double saldoVirtual, Double valorTotalInvestido, Double valorAtual, Double lucroPrejuizo, List<Transacao> transacoes) {
         this.id = id;
         this.saldoVirtual = saldoVirtual;
         this.valorTotalInvestido = valorTotalInvestido;
@@ -22,20 +20,37 @@ public class Carteira {
         this.transacoes = new ArrayList<>();
     }
 
-    public void addTransaction(Transacao t) {
+    public Carteira() {
+    }
+
+    public void adicionarTransacao(Transacao t) {
         transacoes.add(t);
+        valorTotalInvestido += t.getValor();
     }
 
-    public BigDecimal calculateValue() {
-        return valorAtual;
+    public void calcularValorAtual() {
+        valorAtual = transacoes.stream()
+                .mapToDouble(Transacao::getValorAtual)
+                .sum();
     }
 
-    public BigDecimal calculateLucroPrejuizo() {
-        lucroPrejuizo = valorAtual.subtract(valorTotalInvestido);
-        return lucroPrejuizo;
+    public void calcularLucroPrejuizo() {
+        lucroPrejuizo = valorAtual - valorTotalInvestido;
     }
 
-    public List<Transacao> toListTransacoes() {
+    public List<Transacao> listarTransacoes() {
         return transacoes;
+    }
+
+    private List<Transacao> transacoes = new ArrayList<>();
+
+
+
+    public Double getSaldoVirtual() {
+        return saldoVirtual;
+    }
+
+    public void setSaldoVirtual(Double saldoVirtual) {
+        this.saldoVirtual = saldoVirtual;
     }
 }
